@@ -9,11 +9,12 @@
                 OnRowDeleting="fshijLiber"
                 datakeynames="id">
                 <Columns>
+                    <asp:ImageField DataImageUrlField="imageUrl" NullDisplayText="No Image available" HeaderText="Foto"></asp:ImageField>
                     <asp:BoundField DataField="titull" HeaderText="Titulli"  />
                     <asp:BoundField DataField="autori" HeaderText="Autori" />
                     <asp:BoundField DataField ="viti" HeaderText="Viti i botimit" />
                     <asp:BoundField DataField="cmimi" HeaderText="Cmimi" />
-                    <asp:CommandField ShowDeleteButton =" true" />
+                    <asp:CommandField ShowDeleteButton = "true" />
 
 
                 </Columns>

@@ -30,6 +30,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                     liber.Autori =  reader.GetString(2);
                     liber.Viti = reader.GetInt32(3);
                     liber.Cmimi =  reader.GetInt32(4);
+                    liber.ImageUrl = reader.GetString(5);
 
                 }
 
@@ -52,6 +53,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                     liber.Autori = reader.GetString(2);
                     liber.Viti = reader.GetInt32(3);
                     liber.Cmimi = reader.GetInt32(4);
+                liber.ImageUrl = reader.GetString(5);
 
                     librat.Add(liber);
                 }

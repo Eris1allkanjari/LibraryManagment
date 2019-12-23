@@ -11,6 +11,7 @@ namespace LibraryManagment.LibraryData.Model {
         private String autori;
         private int viti;
         private decimal cmimi;
+        private String imageUrl;
 
         public int Id {
             get { return id; }
@@ -35,6 +36,11 @@ namespace LibraryManagment.LibraryData.Model {
         public decimal Cmimi {
             get { return cmimi; }
             set { this.cmimi = value; }
+        }
+
+        public String ImageUrl {
+            get { return imageUrl; }
+            set { this.imageUrl = value; }
         }
     }
 }
