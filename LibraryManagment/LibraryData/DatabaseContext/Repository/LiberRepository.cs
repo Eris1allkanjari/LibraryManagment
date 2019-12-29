@@ -34,7 +34,9 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
                 }
 
-                return liber;
+            connection.Close();
+            return liber;
+            
 
         }
 
@@ -53,12 +55,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                     liber.Autori = reader.GetString(2);
                     liber.Viti = reader.GetInt32(3);
                     liber.Cmimi = reader.GetInt32(4);
-                liber.ImageUrl = reader.GetString(5);
+                //liber.ImageUrl = reader.GetString(5);
 
                     librat.Add(liber);
                 }
-           
+            connection.Close();
             return librat;
+           
 
         }
 
@@ -78,7 +81,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             query.Parameters.AddWithValue("@cmimi", liber.Cmimi);
             connection.Open();
 
-            return query.ExecuteNonQuery();
+            int numberOfRows =  query.ExecuteNonQuery();
+
+            connection.Close();
+
+            return numberOfRows;
+
+            
         }
 
         public int perditeso(Liber liber) {
@@ -93,7 +102,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             query.Parameters.AddWithValue("@cmimi", liber.Cmimi);
             connection.Open();
 
-            return query.ExecuteNonQuery();
+
+            int numberOfRows =  query.ExecuteNonQuery();
+
+            connection.Close();
+
+            return numberOfRows;
+
 
         }
 
@@ -105,7 +120,11 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
             query.Parameters.AddWithValue("@id", id);
 
+            connection.Open();
+
             query.ExecuteNonQuery();
+
+            connection.Close();
         }
 
         public List<Liber> kerko(String fjala) {
@@ -130,8 +149,10 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
                 librat.Add(liber);
             }
-
+            connection.Close();
             return librat;
+
+            
         }
     }
 }

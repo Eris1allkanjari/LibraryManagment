@@ -7,13 +7,15 @@
             <asp:GridView ID="libratGridView" runat="server" 
                 AutoGenerateColumns="false"
                 OnRowDeleting="fshijLiber"
-                datakeynames="id">
+                datakeynames="id"
+                OnRowUpdated="libratGridView_RowUpdated">
                 <Columns>
                     <asp:ImageField DataImageUrlField="imageUrl" NullDisplayText="No Image available" HeaderText="Foto"></asp:ImageField>
                     <asp:BoundField DataField="titull" HeaderText="Titulli"  />
                     <asp:BoundField DataField="autori" HeaderText="Autori" />
                     <asp:BoundField DataField ="viti" HeaderText="Viti i botimit" />
                     <asp:BoundField DataField="cmimi" HeaderText="Cmimi" />
+                    <asp:CommandField ShowEditButton = "true" />
                     <asp:CommandField ShowDeleteButton = "true" />
 
 
