@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LibraryManagment.LibraryData.Model;
+using LibraryManagment.LibraryData.Services;
 using Microsoft.AspNet.Identity;
 
 namespace LibraryManagment
@@ -75,6 +77,15 @@ namespace LibraryManagment
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+        protected void searchButton_Click(object sender, EventArgs e) {
+
+            LiberService liberService = new LiberService();
+
+            List<Liber> librat = liberService.kerko(txtSearch.Text);
+
+            Response.Redirect(~/SearchPage);
         }
     }
 
