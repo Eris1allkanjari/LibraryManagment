@@ -20,7 +20,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             Checkout checkout = new Checkout();
 
             String queryString = "SELECT * FROM Checkout WHERE id=@id";
-            
+            try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
                 query.Parameters.AddWithValue("@id", id);
@@ -35,7 +35,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                     checkout.MarrjaLibrit = reader.GetDateTime(2);
                     checkout.Karte = karteRepository.gjejMeId(reader.GetInt32(3));
                 }
-
+                return checkout;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
                 return checkout;
             }
         
@@ -45,69 +51,97 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             List<Checkout> checkouts = new List<Checkout>();
 
             String queryString = "SELECT * FROM Checkout ";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                connection.Open();
 
-            connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read()) {
 
-            while (reader.Read()) {
+                    Checkout checkout = new Checkout();
 
-                Checkout checkout = new Checkout();
+                    checkout.Id = reader.GetInt32(0);
+                    checkout.MarrjaLibrit = reader.GetDateTime(1);
+                    checkout.MarrjaLibrit = reader.GetDateTime(2);
+                    checkout.Karte = karteRepository.gjejMeId(reader.GetInt32(3));
 
-                checkout.Id = reader.GetInt32(0);
-                checkout.MarrjaLibrit = reader.GetDateTime(1);
-                checkout.MarrjaLibrit = reader.GetDateTime(2);
-                checkout.Karte = karteRepository.gjejMeId(reader.GetInt32(3));
-
-                checkouts.Add(checkout);
+                    checkouts.Add(checkout);
+                }
+                return checkouts;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return checkouts;
         }
         public int shto(Checkout checkout) {
 
             String queryString = "INSERT INTO Checkout(id,since,until,karte_id) VALUES (@id,@since,@until,@karte_id)";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", checkout.Id);
+                query.Parameters.AddWithValue("@since", checkout.MarrjaLibrit);
+                query.Parameters.AddWithValue("@until", checkout.KthimiLibrit);
+                query.Parameters.AddWithValue("@karte_id", checkout.Karte.Id);
 
-            query.Parameters.AddWithValue("@id", checkout.Id);
-            query.Parameters.AddWithValue("@since", checkout.MarrjaLibrit);
-            query.Parameters.AddWithValue("@until", checkout.KthimiLibrit);
-            query.Parameters.AddWithValue("@karte_id", checkout.Karte.Id);
+                connection.Open();
 
-            connection.Open();
-
-            return query.ExecuteNonQuery();
-        }
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch (SqlException e) {
+                String error = e.Message;
+            } finally {
+                connection.Close();
+            }
+            return 0;
+            }
+        
 
         public int perditeso(Checkout checkout) {
 
             String queryString = "UPDATE Checkout SET id=@id,since=@since,until=@until,karte_id=@karteId";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", checkout.Id);
+                query.Parameters.AddWithValue("@since", checkout.MarrjaLibrit);
+                query.Parameters.AddWithValue("@until", checkout.KthimiLibrit);
+                query.Parameters.AddWithValue("@karte_id", checkout.Karte.Id);
 
-            query.Parameters.AddWithValue("@id", checkout.Id);
-            query.Parameters.AddWithValue("@since", checkout.MarrjaLibrit);
-            query.Parameters.AddWithValue("@until", checkout.KthimiLibrit);
-            query.Parameters.AddWithValue("@karte_id", checkout.Karte.Id);
-
-            connection.Open();
-
-            return query.ExecuteNonQuery();
+                connection.Open();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
+            
         }
 
         
 
         public void fshijMeId(int id) {
             String queryString = "DELETE FROM Checkout WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
-
-            query.Parameters.AddWithValue("@id", id);
-
-            query.ExecuteNonQuery();
+                query.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                query.ExecuteNonQuery();
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
         }
     }
 }

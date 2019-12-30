@@ -16,11 +16,11 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             Status status = new Status();
             String queryString = "SELECT * FROM Statusi WHERE id=@id";
 
-           
+            try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
                 query.Parameters.AddWithValue("@id", id);
-            
+
                 connection.Open();
                 SqlDataReader reader = query.ExecuteReader();
 
@@ -30,7 +30,14 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                     status.Pershkrim = reader.GetString(2);
 
                 }
-            
+
+                return status;
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
             return status;
         }
 
@@ -38,7 +45,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             List<Status> statuset = new List<Status>();
 
             String queryString = "SELECT * FROM Statusi";
-
+            try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
                 connection.Open();
@@ -56,13 +63,20 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                 }
 
                 return statuset;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return statuset;
          
         }
 
         public int shto(Status status) {
             String queryString = "INSERT INTO Statusi(id,emer,pershkrim) VALUES(@id,@emer,@pershkrim) ";
 
-            
+            try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
                 query.Parameters.AddWithValue("@id", status.Id);
@@ -72,14 +86,22 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
                 connection.Open();
 
-                return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
            
         }
 
         public int perditeso(Status status) {
 
             String queryString = "UPDATE Statusi SET id=@id,emer=@emer,pershkrim=@pershkrim";
-
+            try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
                 query.Parameters.AddWithValue("@id", status.Id);
@@ -88,19 +110,35 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
                 connection.Open();
 
-                return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
           
         }
 
         public void fshijMeId(int id) {
 
             String queryString = "DELETE FROM Statusi WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
 
-            query.ExecuteNonQuery();
+                query.ExecuteNonQuery();
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
         }
     }
 }

@@ -21,51 +21,67 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
             Klient klient = new Klient();
             String queryString = "SELECT * FROM Klient WHERE id=@id";
 
-            SqlCommand query = new SqlCommand(queryString,connection);
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            query.Parameters.AddWithValue("@id", id);
+                query.Parameters.AddWithValue("@id", id);
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            if (reader.Read()) {
-                klient.Id = reader.GetInt32(0);
-                klient.Emri = reader.GetString(1);
-                klient.Mbiemri = reader.GetString(2);
-                klient.Adresa = reader.GetString(3);
-                klient.NumerTelefoni = reader.GetInt32(4);
-                klient.Email = reader.GetString(5);
-                klient.Username = reader.GetString(6);
-                klient.Password = reader.GetString(7);
-                klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                if (reader.Read()) {
+                    klient.Id = reader.GetInt32(0);
+                    klient.Emri = reader.GetString(1);
+                    klient.Mbiemri = reader.GetString(2);
+                    klient.Adresa = reader.GetString(3);
+                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.Email = reader.GetString(5);
+                    klient.Username = reader.GetString(6);
+                    klient.Password = reader.GetString(7);
+                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                }
+
+                return klient;
             }
-
+            catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
             return klient;
         }
 
         public Klient gjejMeEmail(String email) {
             Klient klient = new Klient();
             String queryString = "SELECT * FROM Klient WHERE email=@email";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@email", email);
 
-            query.Parameters.AddWithValue("@email", email);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
+                if (reader.Read()) {
+                    klient.Id = reader.GetInt32(0);
+                    klient.Emri = reader.GetString(1);
+                    klient.Mbiemri = reader.GetString(2);
+                    klient.Adresa = reader.GetString(3);
+                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.Email = reader.GetString(5);
+                    klient.Username = reader.GetString(6);
+                    klient.Password = reader.GetString(7);
+                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                }
 
-            if (reader.Read()) {
-                klient.Id = reader.GetInt32(0);
-                klient.Emri = reader.GetString(1);
-                klient.Mbiemri = reader.GetString(2);
-                klient.Adresa = reader.GetString(3);
-                klient.NumerTelefoni = reader.GetInt32(4);
-                klient.Email = reader.GetString(5);
-                klient.Username = reader.GetString(6);
-                klient.Password = reader.GetString(7);
-                klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                return klient;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return klient;
         }
 
@@ -74,28 +90,35 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
             List<Klient> klientet = new List<Klient>();
 
             String queryString = "SELECT * FROM Klient";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read()) {
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
+                    Klient klient = new Klient();
+                    klient.Id = reader.GetInt32(0);
+                    klient.Emri = reader.GetString(1);
+                    klient.Mbiemri = reader.GetString(2);
+                    klient.Adresa = reader.GetString(3);
+                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.Email = reader.GetString(5);
+                    klient.Username = reader.GetString(6);
+                    klient.Password = reader.GetString(7);
+                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
 
-                Klient klient = new Klient();
-                klient.Id = reader.GetInt32(0);
-                klient.Emri = reader.GetString(1);
-                klient.Mbiemri = reader.GetString(2);
-                klient.Adresa = reader.GetString(3);
-                klient.NumerTelefoni = reader.GetInt32(4);
-                klient.Email = reader.GetString(5);
-                klient.Username = reader.GetString(6);
-                klient.Password = reader.GetString(7);
-                klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                    klientet.Add(klient);
 
-                klientet.Add(klient);
+                }
 
+                return klientet;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return klientet;
 
             }
@@ -103,54 +126,79 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
         public int shto(Klient klient) {
             String queryString = "INSERT INTO Klient(id,emri,mbiemri,username,email,password,adresa,numer_telefoni,dega_id) VALUES(@id,@emri,@mbiemri,@username,@email,@password,@adresa,@numerTelefoni,@degaId) ";
 
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", klient.Id);
+                query.Parameters.AddWithValue("@emri", klient.Emri);
+                query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
+                query.Parameters.AddWithValue("@username", klient.Username);
+                query.Parameters.AddWithValue("@email", klient.Email);
+                query.Parameters.AddWithValue("@password", klient.Password);
+                query.Parameters.AddWithValue("@adresa", klient.Adresa);
+                query.Parameters.AddWithValue("@numerTelefoni", klient.NumerTelefoni);
+                query.Parameters.AddWithValue("@degaId", klient.Dega.Id);
 
-            query.Parameters.AddWithValue("@id", klient.Id);
-            query.Parameters.AddWithValue("@emri", klient.Emri);
-            query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
-            query.Parameters.AddWithValue("@username", klient.Username);
-            query.Parameters.AddWithValue("@email", klient.Email);
-            query.Parameters.AddWithValue("@password", klient.Password);
-            query.Parameters.AddWithValue("@adresa", klient.Adresa);
-            query.Parameters.AddWithValue("@numerTelefoni", klient.NumerTelefoni);
-            query.Parameters.AddWithValue("@degaId", klient.Dega.Id);
-            connection.Open();
+                connection.Open();
 
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
         }
 
         public int perditeso(Klient klient) {
 
             String queryString = "UPDATE Klient SET " +
-                "emri=@emri,mbiemri=@mbiemri,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId";
+            "emri=@emri,mbiemri=@mbiemri,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId";
 
-            SqlCommand query = new SqlCommand(queryString, connection);
-            query.Parameters.AddWithValue("@emri", klient.Emri);
-            query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
-            query.Parameters.AddWithValue("@username", klient.Username);
-            query.Parameters.AddWithValue("@email", klient.Email);
-            query.Parameters.AddWithValue("@password", klient.Password);
-            query.Parameters.AddWithValue("@adresa", klient.Adresa);
-            query.Parameters.AddWithValue("@numerTelefoni", klient.NumerTelefoni);
-            query.Parameters.AddWithValue("@degaId", klient.Dega.Id);
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@emri", klient.Emri);
+                query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
+                query.Parameters.AddWithValue("@username", klient.Username);
+                query.Parameters.AddWithValue("@email", klient.Email);
+                query.Parameters.AddWithValue("@password", klient.Password);
+                query.Parameters.AddWithValue("@adresa", klient.Adresa);
+                query.Parameters.AddWithValue("@numerTelefoni", klient.NumerTelefoni);
+                query.Parameters.AddWithValue("@degaId", klient.Dega.Id);
 
-            connection.Open();
+                connection.Open();
 
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
 
-
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
         }
 
         public void fshijMeId(int id) {
 
             String queryString = "DELETE FROM Klient WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
 
-            query.ExecuteNonQuery();
+                query.ExecuteNonQuery();
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
         }
 
 

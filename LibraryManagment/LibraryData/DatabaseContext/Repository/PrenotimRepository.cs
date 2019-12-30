@@ -18,22 +18,29 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
         public Prenotim gjejMeId(int id) {
             Prenotim prenotim = new Prenotim();
             String queryString = "SELECT * FROM Prenotim WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
+                if (reader.Read()) {
+                    prenotim.Id = reader.GetInt32(0);
+                    prenotim.VendosjaPrenotimit = reader.GetDateTime(1);
+                    prenotim.Liber = liberRepository.gjejMeId(reader.GetInt32(2));
+                    prenotim.Karta = kartaRepository.gjejMeId(reader.GetInt32(3));
 
-            if (reader.Read()) {
-                prenotim.Id = reader.GetInt32(0);
-                prenotim.VendosjaPrenotimit = reader.GetDateTime(1);
-                prenotim.Liber = liberRepository.gjejMeId(reader.GetInt32(2));
-                prenotim.Karta = kartaRepository.gjejMeId(reader.GetInt32(3));
-               
+                }
+
+                return prenotim;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return prenotim;
         }
 
@@ -41,24 +48,31 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             List<Prenotim> prenotimet = new List<Prenotim>();
 
             String queryString = "SELECT * FROM Librarian";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read()) {
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
+                    Prenotim prenotim = new Prenotim();
 
-                Prenotim prenotim = new Prenotim();
+                    prenotim.Id = reader.GetInt32(0);
+                    prenotim.VendosjaPrenotimit = reader.GetDateTime(1);
+                    prenotim.Liber = liberRepository.gjejMeId(reader.GetInt32(2));
+                    prenotim.Karta = kartaRepository.gjejMeId(reader.GetInt32(3));
 
-                prenotim.Id = reader.GetInt32(0);
-                prenotim.VendosjaPrenotimit = reader.GetDateTime(1);
-                prenotim.Liber = liberRepository.gjejMeId(reader.GetInt32(2));
-                prenotim.Karta = kartaRepository.gjejMeId(reader.GetInt32(3));
+                    prenotimet.Add(prenotim);
 
-                prenotimet.Add(prenotim);
+                }
 
+                return prenotimet;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return prenotimet;
 
         }
@@ -66,45 +80,70 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
         public int shto(Prenotim prenotim) {
             String queryString = "INSERT INTO Prenotim(id,vendosja_prenotimit,liber_id,karte_id) VALUES(@id,@vendosjaPrenotimit,@liber_id,@karte_id) ";
 
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", prenotim.Id);
+                query.Parameters.AddWithValue("@vendosjaPrenotimit", prenotim.VendosjaPrenotimit);
+                query.Parameters.AddWithValue("@liber_id", prenotim.Liber.Id);
+                query.Parameters.AddWithValue("@karte_id", prenotim.Karta.Id);
 
-            query.Parameters.AddWithValue("@id", prenotim.Id);
-            query.Parameters.AddWithValue("@vendosjaPrenotimit", prenotim.VendosjaPrenotimit);
-            query.Parameters.AddWithValue("@liber_id", prenotim.Liber.Id);
-            query.Parameters.AddWithValue("@karte_id", prenotim.Karta.Id);
-            
-            connection.Open();
+                connection.Open();
 
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
         }
 
         public int perditeso(Prenotim prenotim) {
 
             String queryString = "UPDATE Librarian SET id=@id,vendosja_prenotimit=@vendosjaPrenotimit,liber_id=@liberId,karte_id=@karteId";
 
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", prenotim.Id);
+                query.Parameters.AddWithValue("@vendosjaPrenotimit", prenotim.VendosjaPrenotimit);
+                query.Parameters.AddWithValue("@liber_id", prenotim.Liber.Id);
+                query.Parameters.AddWithValue("@karte_id", prenotim.Karta.Id);
+                connection.Open();
 
-            query.Parameters.AddWithValue("@id", prenotim.Id);
-            query.Parameters.AddWithValue("@vendosjaPrenotimit", prenotim.VendosjaPrenotimit);
-            query.Parameters.AddWithValue("@liber_id", prenotim.Liber.Id);
-            query.Parameters.AddWithValue("@karte_id", prenotim.Karta.Id);
-            connection.Open();
+                int numberOfRows = query.ExecuteNonQuery();
 
-            return query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
 
+            return 0;
         }
 
         public void fshijMeId(int id) {
 
             String queryString = "DELETE FROM Prenotim WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
 
-            query.ExecuteNonQuery();
+                query.ExecuteNonQuery();
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
         }
     }
 }

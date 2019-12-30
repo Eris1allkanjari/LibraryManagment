@@ -18,19 +18,26 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             Karta karta = new Karta();
 
             String queryString = "SELECT * from Karta where id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
+                if (reader.Read()) {
+                    karta.Id = reader.GetInt32(0);
+                    karta.Pagesa = reader.GetDecimal(1);
+                    karta.Klient = klientRepository.gjejMeId(reader.GetInt32(2));
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
-            if (reader.Read()) {
-                karta.Id = reader.GetInt32(0);
-                karta.Pagesa = reader.GetDecimal(1);
-                karta.Klient = klientRepository.gjejMeId(reader.GetInt32(2));
-              
+                }
+                return karta;
+            } 
+            catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return karta;
         }
 
@@ -39,21 +46,29 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             List<Karta> kartat = new List<Karta>();
 
             String queryString = "SELECT * FROM Karta";
-            SqlCommand query = new SqlCommand(queryString, connection);
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            while (reader.Read()) {
-                Karta karta = new Karta();
+                while (reader.Read()) {
+                    Karta karta = new Karta();
 
-                karta.Id = reader.GetInt32(0);
-                karta.Pagesa = reader.GetDecimal(1);
-                karta.Klient = klientRepository.gjejMeId(reader.GetInt32(2));
+                    karta.Id = reader.GetInt32(0);
+                    karta.Pagesa = reader.GetDecimal(1);
+                    karta.Klient = klientRepository.gjejMeId(reader.GetInt32(2));
 
-                kartat.Add(karta);
+                    kartat.Add(karta);
+                }
+
+                return kartat;
+            }  catch (SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return kartat;
         }
 
@@ -62,43 +77,71 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
             String queryString = "INSERT INTO Karta(id,pagesa,klient_id) VALUES(@id,@pagesa,@klientId) ";
 
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", karta.Id);
+                query.Parameters.AddWithValue("@pagesa", karta.Pagesa);
+                query.Parameters.AddWithValue("@klientId", karta.Klient.Id);
 
-            query.Parameters.AddWithValue("@id", karta.Id);
-            query.Parameters.AddWithValue("@pagesa", karta.Pagesa);
-            query.Parameters.AddWithValue("@klientId",karta.Klient.Id );
-           
 
-            connection.Open();
+                connection.Open();
 
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+
+                return numberOfRows;
+            } catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+
+            return 0;
         }
 
         public int perditeso(Karta karta) {
 
             String queryString = "UPDATE Karta SET id=@id,pagesa=@pagesa,klient_id=@klientId";
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            query.Parameters.AddWithValue("@id", karta.Id);
-            query.Parameters.AddWithValue("@pagesa", karta.Pagesa);
-            query.Parameters.AddWithValue("@klientId", karta.Klient.Id);
+                query.Parameters.AddWithValue("@id", karta.Id);
+                query.Parameters.AddWithValue("@pagesa", karta.Pagesa);
+                query.Parameters.AddWithValue("@klientId", karta.Klient.Id);
 
-            connection.Open();
+                connection.Open();
 
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+
+            return 0;
         }
 
 
         public void fshijMeId(int id) {
             String queryString = "DELETE FROM Karta WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
 
-            query.ExecuteNonQuery();
+                query.ExecuteNonQuery();
+            } catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
         }
     }
 }

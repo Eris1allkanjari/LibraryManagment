@@ -16,20 +16,26 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             Dega dega = new Dega();
 
             String queryString = "SELECT * from Dega where id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
-            query.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
+                if (reader.Read()) {
+                    dega.Id = reader.GetInt32(0);
+                    dega.Emri = reader.GetString(1);
+                    dega.Adresa = reader.GetString(2);
+                    dega.Pershkrim = reader.GetString(3);
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
-            if (reader.Read()) {
-                dega.Id = reader.GetInt32(0);
-                dega.Emri = reader.GetString(1);
-                dega.Adresa = reader.GetString(2);
-                dega.Pershkrim = reader.GetString(3);
-          
+                }
+                return dega;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return dega;
         }
 
@@ -37,22 +43,30 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
             List<Dega> deget = new List<Dega>();
 
             String queryString = "SELECT * FROM Dega";
-            SqlCommand query = new SqlCommand(queryString, connection);
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            connection.Open();
-            SqlDataReader reader = query.ExecuteReader();
+                connection.Open();
+                SqlDataReader reader = query.ExecuteReader();
 
-            while (reader.Read()) {
-                Dega dega = new Dega();
+                while (reader.Read()) {
+                    Dega dega = new Dega();
 
-                dega.Id = reader.GetInt32(0);
-                dega.Emri = reader.GetString(1);
-                dega.Adresa = reader.GetString(2);
-                dega.Pershkrim = reader.GetString(3);
+                    dega.Id = reader.GetInt32(0);
+                    dega.Emri = reader.GetString(1);
+                    dega.Adresa = reader.GetString(2);
+                    dega.Pershkrim = reader.GetString(3);
 
-                deget.Add(dega);
+                    deget.Add(dega);
+                }
+
+                return deget;
+            } catch(SqlException e) {
+                String error = e.Message;
             }
-
+            finally {
+                connection.Close();
+            }
             return deget;
         }
 
@@ -61,44 +75,72 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
             String queryString = "INSERT INTO Dega(id,emri,adresa,pershkrim) VALUES(@id,@emri,@adresa,@pershkrim) ";
 
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", dega.Id);
+                query.Parameters.AddWithValue("@emri", dega.Emri);
+                query.Parameters.AddWithValue("@adresa", dega.Adresa);
+                query.Parameters.AddWithValue("@pershkrim", dega.Pershkrim);
 
-            query.Parameters.AddWithValue("@id", dega.Id);
-            query.Parameters.AddWithValue("@emri", dega.Emri);
-            query.Parameters.AddWithValue("@adresa", dega.Adresa);
-            query.Parameters.AddWithValue("@pershkrim", dega.Pershkrim);
+                connection.Open();
 
-            connection.Open();
-
-            return query.ExecuteNonQuery();
+                int numberOfRows = query.ExecuteNonQuery();
+                return numberOfRows;
+            } 
+            catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+            return 0;
         }
 
         public int perditeso(Dega dega) {
 
             String queryString = "UPDATE Dega SET id=@id,emri=@emri,adresa=@adresa,pershkrim=@pershkrim";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", dega.Id);
+                query.Parameters.AddWithValue("@emri", dega.Emri);
+                query.Parameters.AddWithValue("@adresa", dega.Adresa);
+                query.Parameters.AddWithValue("@pershkrim", dega.Pershkrim);
 
-            query.Parameters.AddWithValue("@id", dega.Id);
-            query.Parameters.AddWithValue("@emri", dega.Emri);
-            query.Parameters.AddWithValue("@adresa", dega.Adresa);
-            query.Parameters.AddWithValue("@pershkrim", dega.Pershkrim);
+                connection.Open();
 
-            connection.Open();
+                int numberOfRows = query.ExecuteNonQuery();
 
-            return query.ExecuteNonQuery();
+                return numberOfRows;
+            }
+            catch (SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
+
+            return 0;
         }
 
 
         public void fshijMeId(int id) {
             String queryString = "DELETE FROM Dega WHERE id=@id";
+            try {
+                SqlCommand query = new SqlCommand(queryString, connection);
 
-            SqlCommand query = new SqlCommand(queryString, connection);
+                query.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                query.ExecuteNonQuery();
+            }
+            catch(SqlException e) {
+                String error = e.Message;
+            }
+            finally {
+                connection.Close();
+            }
 
-            query.Parameters.AddWithValue("@id", id);
-
-            query.ExecuteNonQuery();
         }
     }
 }
