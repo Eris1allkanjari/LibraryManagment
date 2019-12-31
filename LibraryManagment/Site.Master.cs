@@ -81,11 +81,9 @@ namespace LibraryManagment
 
         protected void searchButton_Click(object sender, EventArgs e) {
 
-            LiberService liberService = new LiberService();
-
-            List<Liber> librat = liberService.kerko(txtSearch.Text);
-
-            Response.Redirect(~/SearchPage);
+            String searchQuery = txtSearch.Text;
+            
+            Response.Redirect("~/Search?search="+searchQuery);
         }
     }
 
