@@ -34,7 +34,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
                     klient.Adresa = reader.GetString(3);
-                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.NumerTelefoni = reader.GetString(4);
                     klient.Email = reader.GetString(5);
                     klient.Username = reader.GetString(6);
                     klient.Password = reader.GetString(7);
@@ -68,7 +68,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
                     klient.Adresa = reader.GetString(3);
-                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.NumerTelefoni = reader.GetString(4);
                     klient.Email = reader.GetString(5);
                     klient.Username = reader.GetString(6);
                     klient.Password = reader.GetString(7);
@@ -102,7 +102,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
                     klient.Adresa = reader.GetString(3);
-                    klient.NumerTelefoni = reader.GetInt32(4);
+                    klient.NumerTelefoni = reader.GetString(4);
                     klient.Email = reader.GetString(5);
                     klient.Username = reader.GetString(6);
                     klient.Password = reader.GetString(7);

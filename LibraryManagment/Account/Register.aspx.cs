@@ -37,13 +37,13 @@ namespace LibraryManagment.Account
                 klient.Email = Email.Text;
                 klient.Password = Password.Text;
                 klient.Adresa = Address.Text;
-                klient.NumerTelefoni = Int32.Parse(Phone.Text);
+                klient.NumerTelefoni = Phone.Text;
                 klient.Dega = degaService.gjejMeId(1);
 
                 klientService.shto(klient);
 
 
-                signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
+                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false) ;
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
             else 

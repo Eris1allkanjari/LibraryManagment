@@ -13,7 +13,7 @@ namespace LibraryManagment.LibraryData.Model {
         private String email;
         private String password;
         private String adresa;
-        private int numerTelefoni;
+        private String numerTelefoni;
         private Dega dega;
 
         public int Id {
@@ -51,7 +51,7 @@ namespace LibraryManagment.LibraryData.Model {
             set { this.adresa = value; }
         }
 
-        public int NumerTelefoni {
+        public String NumerTelefoni {
             get { return numerTelefoni; }
             set { this.numerTelefoni = value; }
         }

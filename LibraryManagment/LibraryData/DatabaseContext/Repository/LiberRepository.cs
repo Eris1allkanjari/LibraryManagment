@@ -163,11 +163,12 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
             
             try {
-                String queryString = "SELECT * FROM Liber WHERE titull LIKE '"+fjala+"%' OR autori LIKE '%"+fjala+"%'" ;
-               // String queryString = "SELECT * FROM Liber WHERE titull LIKE @fjala OR autori LIKE @fjala";
+                
+                String queryString = "SELECT * FROM Liber WHERE titull LIKE @fjala OR autori LIKE @fjala";
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-               // query.Parameters.AddWithValue("@fjala", fjala);
+                query.Parameters.AddWithValue("@fjala", fjala);
+
 
                 connection.Open();
                 SqlDataReader reader = query.ExecuteReader();
