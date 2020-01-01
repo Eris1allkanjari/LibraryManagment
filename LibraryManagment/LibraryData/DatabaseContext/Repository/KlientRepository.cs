@@ -67,8 +67,8 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                     klient.Id = reader.GetInt32(0);
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
-                    klient.Birthday = reader.GetDateTime(3);
-                    klient.Adresa = reader.GetString(4);
+                    klient.Adresa = reader.GetString(3);
+                    klient.Birthday = reader.GetDateTime(4);
                     klient.NumerTelefoni = reader.GetString(5);
                     klient.Email = reader.GetString(6);
                     klient.Username = reader.GetString(7);

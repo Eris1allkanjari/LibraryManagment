@@ -14,6 +14,10 @@ namespace LibraryManagment.LibraryData.Services {
             return klientRepository.gjejMeId(id);
         }
 
+        public Klient gjejMeEmail(String email) {
+            return klientRepository.gjejMeEmail(email);
+        }
+
         public List<Klient> gjejTeGjitha() {
             return klientRepository.gjejTeGjitha();
         }
