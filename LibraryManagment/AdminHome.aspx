@@ -10,7 +10,7 @@
                 datakeynames="id"
                 OnRowUpdated="libratGridView_RowUpdated">
                 <Columns>
-                    <asp:ImageField DataImageUrlField="imageUrl" NullDisplayText="No Image available" HeaderText="Foto"></asp:ImageField>
+                    <asp:ImageField DataImageUrlField="imageUrl" NullDisplayText="No Image available" HeaderText="Foto" ControlStyle-Height="120px" ControlStyle-Width="80px"></asp:ImageField>
                     <asp:BoundField DataField="titull" HeaderText="Titulli"  />
                     <asp:BoundField DataField="autori" HeaderText="Autori" />
                     <asp:BoundField DataField ="viti" HeaderText="Viti i botimit" />

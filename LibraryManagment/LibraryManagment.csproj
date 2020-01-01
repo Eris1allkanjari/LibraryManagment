@@ -176,6 +176,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\aLongWayGone.jpg" />
+    <Content Include="Content\Images\beachglass.jpg" />
+    <Content Include="Content\Images\casehistory.jpg" />
+    <Content Include="Content\Images\lastSeason.jpg" />
+    <Content Include="Content\Images\placesInBetween.jpg" />
+    <Content Include="Content\Images\restless.jpg" />
+    <Content Include="Content\Images\sisters.jpg" />
+    <Content Include="Content\Images\stepOnACrack.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
