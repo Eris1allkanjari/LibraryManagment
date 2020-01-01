@@ -67,12 +67,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                     klient.Id = reader.GetInt32(0);
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
-                    klient.Adresa = reader.GetString(3);
-                    klient.NumerTelefoni = reader.GetString(4);
-                    klient.Email = reader.GetString(5);
-                    klient.Username = reader.GetString(6);
-                    klient.Password = reader.GetString(7);
-                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                    klient.Birthday = reader.GetDateTime(3);
+                    klient.Adresa = reader.GetString(4);
+                    klient.NumerTelefoni = reader.GetString(5);
+                    klient.Email = reader.GetString(6);
+                    klient.Username = reader.GetString(7);
+                    klient.Password = reader.GetString(8);
+                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(9));
                 }
 
                 return klient;
@@ -96,17 +97,18 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                 connection.Open();
                 SqlDataReader reader = query.ExecuteReader();
                 while (reader.Read()) {
-
                     Klient klient = new Klient();
+
                     klient.Id = reader.GetInt32(0);
                     klient.Emri = reader.GetString(1);
                     klient.Mbiemri = reader.GetString(2);
-                    klient.Adresa = reader.GetString(3);
-                    klient.NumerTelefoni = reader.GetString(4);
-                    klient.Email = reader.GetString(5);
-                    klient.Username = reader.GetString(6);
-                    klient.Password = reader.GetString(7);
-                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(8));
+                    klient.Birthday = reader.GetDateTime(3);
+                    klient.Adresa = reader.GetString(4);
+                    klient.NumerTelefoni = reader.GetString(5);
+                    klient.Email = reader.GetString(6);
+                    klient.Username = reader.GetString(7);
+                    klient.Password = reader.GetString(8);
+                    klient.Dega = degaRepository.gjejMeId(reader.GetInt32(9));
 
                     klientet.Add(klient);
 
@@ -124,7 +126,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
             }
 
         public int shto(Klient klient) {
-            String queryString = "INSERT INTO Klient(id,emri,mbiemri,username,email,password,adresa,numer_telefoni,dega_id) VALUES(@id,@emri,@mbiemri,@username,@email,@password,@adresa,@numerTelefoni,@degaId) ";
+            String queryString = "INSERT INTO Klient(id,emri,mbiemri,datelindja,username,email,password,adresa,numer_telefoni,dega_id) VALUES(@id,@emri,@mbiemri,@datelindja,@username,@email,@password,@adresa,@numerTelefoni,@degaId) ";
 
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
@@ -132,6 +134,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                 query.Parameters.AddWithValue("@id", klient.Id);
                 query.Parameters.AddWithValue("@emri", klient.Emri);
                 query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
+                query.Parameters.AddWithValue("@datelindja", klient.Birthday);
                 query.Parameters.AddWithValue("@username", klient.Username);
                 query.Parameters.AddWithValue("@email", klient.Email);
                 query.Parameters.AddWithValue("@password", klient.Password);
@@ -155,12 +158,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
         public int perditeso(Klient klient) {
 
             String queryString = "UPDATE Klient SET " +
-            "emri=@emri,mbiemri=@mbiemri,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId";
+            "emri=@emri,mbiemri=@mbiemri,datelindja=@datelindja,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId";
 
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
                 query.Parameters.AddWithValue("@emri", klient.Emri);
                 query.Parameters.AddWithValue("@mbiemri", klient.Mbiemri);
+                query.Parameters.AddWithValue("@datelindja", klient.Birthday);
                 query.Parameters.AddWithValue("@username", klient.Username);
                 query.Parameters.AddWithValue("@email", klient.Email);
                 query.Parameters.AddWithValue("@password", klient.Password);

@@ -9,6 +9,7 @@ namespace LibraryManagment.LibraryData.Model {
         private int id;
         private String emri;
         private String mbiemri;
+        private DateTime birthday;
         private String username;
         private String email;
         private String password;
@@ -29,6 +30,11 @@ namespace LibraryManagment.LibraryData.Model {
         public String Mbiemri {
             get { return mbiemri; }
             set { this.mbiemri = value; }
+        }
+
+        public DateTime Birthday {
+            get { return birthday; }
+            set { this.birthday = value; }
         }
 
         public String Username {

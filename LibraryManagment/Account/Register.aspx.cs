@@ -33,6 +33,7 @@ namespace LibraryManagment.Account
                 klient.Id = RandomIdGenerator.generateId();
                 klient.Emri = FirstName.Text;
                 klient.Mbiemri = LastName.Text;
+                klient.Birthday = DateTime.Parse(Birthday.Text);
                 klient.Username = Username.Text;
                 klient.Email = Email.Text;
                 klient.Password = Password.Text;

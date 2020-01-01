@@ -27,6 +27,14 @@
             </div>
         </div>
         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Birthday" CssClass="col-md-2 control-label">Datelindja</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox type="date" runat="server" ID="Birthday" CssClass="form-control"  />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Birthday"
+                    CssClass="text-danger" ErrorMessage="Ju lutem plotesoni datelindjen!" />
+            </div>
+            </div>
+        <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Username" CssClass="col-md-2 control-label">Username</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Username" CssClass="form-control"  />
