@@ -35,6 +35,9 @@ namespace LibraryManagment {
             if(librat.Count > 0) {
                 libratGridView.DataSource = librat;
                 libratGridView.DataBind();
+            } 
+            else {
+                message.Visible = true;
             }
         }
 

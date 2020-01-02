@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="AdminHome.aspx.cs" Inherits="LibraryManagment.AdminHome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Search.aspx.cs" Inherits="LibraryManagment.Search" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-           <br />
-            <br />
-        <div>
-            <asp:GridView ID="libratGridView" runat="server" 
+
+
+<asp:Content ID="SearchContent" runat="server" ContentPlaceHolderID="MainContent">
+     <div>
+            <asp:GridView ID="searchGridView" runat="server" 
                 AutoGenerateColumns="false"
                 OnRowDeleting="fshijLiber"
                 datakeynames="id"
@@ -22,7 +22,6 @@
                 </Columns>
 
             </asp:GridView>
-            <asp:Label ID="message" runat="server" Text="Nuk u gjend asnje rezultat" Visible="false"></asp:Label>
+         <asp:Label ID="message" runat="server" Text="Nuk u gjend asnje rezultat" Visible="false"></asp:Label>
         </div>
-    
-    </asp:Content>
+</asp:Content>

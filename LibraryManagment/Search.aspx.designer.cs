@@ -10,16 +10,16 @@
 namespace LibraryManagment {
 
 
-    public partial class AdminHome {
+    public partial class Search {
 
         /// <summary>
-        /// libratGridView control.
+        /// searchGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView libratGridView;
+        protected global::System.Web.UI.WebControls.GridView searchGridView;
 
         /// <summary>
         /// message control.
