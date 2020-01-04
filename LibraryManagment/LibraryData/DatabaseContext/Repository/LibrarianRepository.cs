@@ -117,13 +117,14 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Librarian librarian) {
 
-            String queryString = "UPDATE Librarian SET id=@id,emri=@emri,mbiemri=@mbiemri,username=@username," +
-                                 "email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId) ";
+            String queryString = "UPDATE Librarian SET emri=@emri,mbiemri=@mbiemri,username=@username," +
+                                 "email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId " +
+                                 "WHERE id=@id ";
 
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@id", librarian.Id);
+                
                 query.Parameters.AddWithValue("@emri", librarian.Emri);
                 query.Parameters.AddWithValue("@mbiemri", librarian.Mbiemri);
                 query.Parameters.AddWithValue("@username", librarian.Username);
@@ -132,6 +133,8 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
                 query.Parameters.AddWithValue("@adresa", librarian.Adresa);
                 query.Parameters.AddWithValue("@numerTelefoni", librarian.NumerTelefoni);
                 query.Parameters.AddWithValue("@degaId", librarian.Dega.Id);
+                query.Parameters.AddWithValue("@id", librarian.Id);
+
                 connection.Open();
 
                 int numberOfRows = query.ExecuteNonQuery();

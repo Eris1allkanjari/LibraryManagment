@@ -104,14 +104,14 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Checkout checkout) {
 
-            String queryString = "UPDATE Checkout SET id=@id,since=@since,until=@until,karte_id=@karteId";
+            String queryString = "UPDATE Checkout SET since=@since,until=@until,karte_id=@karteId WHERE id=@id";
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@id", checkout.Id);
                 query.Parameters.AddWithValue("@since", checkout.MarrjaLibrit);
                 query.Parameters.AddWithValue("@until", checkout.KthimiLibrit);
                 query.Parameters.AddWithValue("@karte_id", checkout.Karte.Id);
+                query.Parameters.AddWithValue("@id", checkout.Id);
 
                 connection.Open();
                 int numberOfRows = query.ExecuteNonQuery();

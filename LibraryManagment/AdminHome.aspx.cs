@@ -44,6 +44,23 @@ namespace LibraryManagment {
         protected void libratGridView_RowUpdate(object sender, GridViewUpdateEventArgs e) {
             GridViewRow gridViewRow = libratGridView.Rows[e.RowIndex];
             int id = int.Parse(libratGridView.DataKeys[e.RowIndex].Value.ToString());
+            TextBox imageUrl = (TextBox)gridViewRow.Cells[0].Controls[0];
+            TextBox titull = (TextBox)gridViewRow.Cells[1].Controls[0];
+            TextBox autori = (TextBox)gridViewRow.Cells[2].Controls[0];
+            TextBox viti = (TextBox)gridViewRow.Cells[3].Controls[0];
+            TextBox cmimi = (TextBox)gridViewRow.Cells[4].Controls[0];
+
+            Liber liber = new Liber();
+            liber.Id = id;
+            liber.ImageUrl = imageUrl.Text;
+            liber.Titull = titull.Text;
+            liber.Autori = autori.Text;
+            liber.Viti = int.Parse(viti.Text);
+            liber.Cmimi = int.Parse(cmimi.Text);
+            liber.ImageUrl = imageUrl.Text;
+
+            liberService.perditeso(liber);
+
 
 
         }

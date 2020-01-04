@@ -100,13 +100,13 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Status status) {
 
-            String queryString = "UPDATE Statusi SET id=@id,emer=@emer,pershkrim=@pershkrim";
+            String queryString = "UPDATE Statusi SET emer=@emer,pershkrim=@pershkrim WHERE id=@id";
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@id", status.Id);
                 query.Parameters.AddWithValue("@emer", status.Emer);
                 query.Parameters.AddWithValue("@pershkrim", status.Pershkrim);
+                query.Parameters.AddWithValue("@id", status.Id);
 
                 connection.Open();
 

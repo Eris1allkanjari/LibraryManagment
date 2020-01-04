@@ -99,14 +99,14 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Dega dega) {
 
-            String queryString = "UPDATE Dega SET id=@id,emri=@emri,adresa=@adresa,pershkrim=@pershkrim";
+            String queryString = "UPDATE Dega SET emri=@emri,adresa=@adresa,pershkrim=@pershkrim WHERE id=@id";
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@id", dega.Id);
                 query.Parameters.AddWithValue("@emri", dega.Emri);
                 query.Parameters.AddWithValue("@adresa", dega.Adresa);
                 query.Parameters.AddWithValue("@pershkrim", dega.Pershkrim);
+                query.Parameters.AddWithValue("@id", dega.Id);
 
                 connection.Open();
 

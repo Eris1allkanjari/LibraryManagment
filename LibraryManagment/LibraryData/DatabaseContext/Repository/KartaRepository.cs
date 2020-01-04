@@ -102,14 +102,14 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Karta karta) {
 
-            String queryString = "UPDATE Karta SET id=@id,pagesa=@pagesa,klient_id=@klientId";
+            String queryString = "UPDATE Karta SET pagesa=@pagesa,klient_id=@klientId WHERE id=@id";
 
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@id", karta.Id);
                 query.Parameters.AddWithValue("@pagesa", karta.Pagesa);
                 query.Parameters.AddWithValue("@klientId", karta.Klient.Id);
+                query.Parameters.AddWithValue("@id", karta.Id);
 
                 connection.Open();
 

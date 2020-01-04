@@ -112,15 +112,16 @@ namespace LibraryManagment.LibraryData.DatabaseContext.Repository {
 
         public int perditeso(Liber liber) {
 
-            String queryString = "UPDATE Liber SET titull=@titull,autori=@autori,viti=@viti,cmimi=@cmimi";
+            String queryString = "UPDATE Liber SET titull=@titull,autori=@autori,viti=@viti,cmimi=@cmimi WHERE id=@id";
             try {
 
                 SqlCommand query = new SqlCommand(queryString, connection);
 
-                query.Parameters.AddWithValue("@titull", liber.Id);
+                query.Parameters.AddWithValue("@titull", liber.Titull);
                 query.Parameters.AddWithValue("@autori", liber.Autori);
                 query.Parameters.AddWithValue("@viti", liber.Viti);
                 query.Parameters.AddWithValue("@cmimi", liber.Cmimi);
+                query.Parameters.AddWithValue("@id", liber.Id);
                 connection.Open();
 
                 int numberOfRows = query.ExecuteNonQuery();

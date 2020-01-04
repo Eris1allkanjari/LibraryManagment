@@ -158,7 +158,8 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
         public int perditeso(Klient klient) {
 
             String queryString = "UPDATE Klient SET " +
-            "emri=@emri,mbiemri=@mbiemri,datelindja=@datelindja,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId";
+            "emri=@emri,mbiemri=@mbiemri,datelindja=@datelindja,username=@username,email=@email,password=@password,adresa=@adresa,numer_telefoni=@numerTelefoni,dega_id=@degaId" +
+            "WHERE id=@id";
 
             try {
                 SqlCommand query = new SqlCommand(queryString, connection);
@@ -171,6 +172,7 @@ namespace LibraryManagment.LibraryData.DatabaseContext {
                 query.Parameters.AddWithValue("@adresa", klient.Adresa);
                 query.Parameters.AddWithValue("@numerTelefoni", klient.NumerTelefoni);
                 query.Parameters.AddWithValue("@degaId", klient.Dega.Id);
+                query.Parameters.AddWithValue("@id", klient.Id);
 
                 connection.Open();
 

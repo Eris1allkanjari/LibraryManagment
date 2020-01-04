@@ -13,7 +13,7 @@
                 OnRowDeleting="fshijLiber"
                 OnRowEditing="libratGridView_RowEditing"
                 OnRowCancelingEdit="libratGridView_RowCancelingEdit"
-                OnRowUpdate="libratGridView_RowUpdate"
+                OnRowUpdating="libratGridView_RowUpdate"
                 datakeynames="id">
                 <Columns>
                     <asp:ImageField DataImageUrlField="imageUrl" NullDisplayText="No Image available" HeaderText="Foto" ControlStyle-Height="120px" ControlStyle-Width="80px" ControlStyle-CssClass="bookImage"></asp:ImageField>
