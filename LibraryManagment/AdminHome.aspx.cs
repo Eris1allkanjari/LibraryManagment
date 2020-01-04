@@ -61,6 +61,9 @@ namespace LibraryManagment {
 
             liberService.perditeso(liber);
 
+            libratGridView.EditIndex = -1;
+            LidhTeDhenatMeGridView();
+
 
 
         }
@@ -72,7 +75,8 @@ namespace LibraryManagment {
         }
 
         protected void libratGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
-
+            libratGridView.EditIndex = -1;
+            LidhTeDhenatMeGridView();
         }
     }
 }
