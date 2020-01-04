@@ -15,7 +15,7 @@ namespace LibraryManagment {
         protected void Page_Load(object sender, EventArgs e) {
 
             if (!Page.IsPostBack) {
-                BindDataToGridView();
+                LidhTeDhenatMeGridView();
             }
         }
 
@@ -26,10 +26,10 @@ namespace LibraryManagment {
             liberService.fshijMeId(id);
 
             libratGridView.EditIndex = -1;
-            BindDataToGridView();
+            LidhTeDhenatMeGridView();
         }
 
-        public void BindDataToGridView() {
+        public void LidhTeDhenatMeGridView() {
 
             List<Liber> librat = liberService.gjejTeGjitha();
             if(librat.Count > 0) {
@@ -41,7 +41,20 @@ namespace LibraryManagment {
             }
         }
 
-        protected void libratGridView_RowUpdated(object sender, GridViewUpdatedEventArgs e) {
+        protected void libratGridView_RowUpdate(object sender, GridViewUpdateEventArgs e) {
+            GridViewRow gridViewRow = libratGridView.Rows[e.RowIndex];
+            int id = int.Parse(libratGridView.DataKeys[e.RowIndex].Value.ToString());
+
+
+        }
+
+        protected void libratGridView_RowEditing(object sender, GridViewEditEventArgs e) {
+
+            libratGridView.EditIndex = e.NewEditIndex;
+            LidhTeDhenatMeGridView();
+        }
+
+        protected void libratGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
 
         }
     }
